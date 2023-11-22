@@ -42,7 +42,7 @@ export const updateImage = async (req, res) => {
     try {
         const {email} = req.body;
         const uri = await uploadFile(req.files.file);
-        const result = await pool.query(`UPDATE users SET image = ${uri} WHERE email = ${email}`);
+        const result = await pool.query(`UPDATE users SET image = "${uri}" WHERE email = "${email}"`);
         return res.status(200).send(uri);
     } catch (error) {
         console.log(error);
