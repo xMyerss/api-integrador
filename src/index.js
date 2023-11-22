@@ -1,17 +1,17 @@
 import express from 'express';
+import fileUpload from 'express-fileupload'
 import morgan from 'morgan';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-// Img
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 
 import usersRoute from './routes/users.routes.js'
 
 const app = express();
-// Img
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+
+app.use(fileUpload({
+    useTempFiles: true,
+    tempFileDir: './uploads'
+}));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
@@ -22,10 +22,6 @@ app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-// Img
-app.use('/public', express.static(`${__dirname}/storage/imgs`));
-console.log(__dirname);
 
 
 //Welcome
